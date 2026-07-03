@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA Alpha Operation Reports</title>
+  <style>
+    body {
+      font-family: Meiryo, "Noto Sans JP", sans-serif;
+      color: #102333;
+      line-height: 1.7;
+      margin: 32px;
+      max-width: 920px;
+    }
+    h1 { color: #0b4f79; font-size: 24px; }
+    .links {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    a.report {
+      display: block;
+      border: 1px solid #bfd6e6;
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: #0b4f79;
+      text-decoration: none;
+      background: #f7fbfe;
+    }
+    a.report:hover { background: #e8f3fa; }
+    .small { color: #5a6b78; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>NISA Alpha Operation Reports</h1>
+  <p>運用で使うHTMLレポートへの入口です。各レポートは単体HTMLとしてブラウザで開けます。</p>
+  <div class="links">
+    <a class="report" href="reports/rebalance_order.html">
+      <b>四半期・年次の発注内容</b><br>
+      これだけで発注内容を確認できるリバランス指示書
+    </a>
+    <a class="report" href="reports/reload_monitor.html">
+      <b>日次のリロード枠トリガー判定</b><br>
+      利確・損切り・次候補を確認する日次モニタ
+    </a>
+    <a class="report" href="reports/monthly_report.html">
+      <b>月次の3指数比較・チェックリスト</b><br>
+      TOPIX、日経平均、S&amp;P500円建てとの比較と運用確認
+    </a>
+  </div>
+  <p class="small">Generated from nisa_alpha on 2026-07-03. This material is an operation aid, not investment advice.</p>
+</body>
+</html>
