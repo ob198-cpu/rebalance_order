@@ -11,10 +11,10 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 .small{font-size:12px;color:#5a6b78}
 .check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
 /* PDF印刷時の改ページ制御: 見出し直後・表の行・注意ボックスの途中で切らない */
+thead { display: table-header-group; } /* 表が改ページをまたぐ時、次ページ先頭にヘッダ行を再表示 */
 @media print {
-  h1, h2, h3 { break-after: avoid-page; }
-  tr, .ok, .warn, .danger { break-inside: avoid; }
-  table { break-before: avoid-page; }
+  h1, h2, h3 { break-after: avoid-page; page-break-after: avoid; break-inside: avoid; }
+  tr, .ok, .warn, .danger { break-inside: avoid; page-break-inside: avoid; }
   p { orphans: 3; widows: 3; }
 }
 </style></head><body>
@@ -24,8 +24,8 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 本資料は、運用者個人がNISA口座で行う株式運用の<b>方針と仕組みをご説明する情報提供資料</b>です。金融商品取引法に基づく投資助言・投資勧誘ではなく、特定の銘柄の売買を推奨するものではありません。掲載する過去のシミュレーション結果は将来の運用成果を保証しません。投資判断はご自身の責任でお願いいたします。</div>
 
 <h2>1. 全体像 — 240万円をどう分けるか</h2>
-<table>
-<tr><th>区分</th><th>口座</th><th>金額</th><th>中身</th><th>売買の頻度</th></tr>
+<table><thead>
+<tr><th>区分</th><th>口座</th><th>金額</th><th>中身</th><th>売買の頻度</th></tr></thead>
 <tr><td>主力(8銘柄)</td><td>NISA(非課税)</td><td class="num">192万円</td><td>勢いのある大型株8銘柄 × 24万円</td><td>3か月に1回の見直しのみ</td></tr>
 <tr><td>回転枠(2銘柄)</td><td>課税口座</td><td class="num">48万円</td><td>値動きの大きい株2銘柄 × 24万円</td><td>+20%か−8%に達したら入替(過去検証では年20回前後)</td></tr>
 </table>
@@ -38,7 +38,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 2025-06-06の株価(調整後) 697円 → 2026-06-06の株価 4905円<br>
 モメンタム = 4905 ÷ 697 − 1 = <b>603.7%</b> → 全53銘柄中 <b>1位</b></div>
 <h3>2-2. 2026-07-06時点の実際のランキング上位12と採否</h3>
-<table><tr><th>順位</th><th>銘柄</th><th>業種</th><th>直近1年の上昇率</th><th>採否と理由</th></tr>
+<table><thead><tr><th>順位</th><th>銘柄</th><th>業種</th><th>直近1年の上昇率</th><th>採否と理由</th></tr></thead>
 <tr class="buy"><td class="num">1</td><td>5801.T 古河電工</td><td>電線</td><td class="num">603.7%</td><td><b>採用</b></td></tr><tr class="buy"><td class="num">2</td><td>6981.T 村田製作所</td><td>電子部品</td><td class="num">375.2%</td><td><b>採用</b></td></tr><tr class="buy"><td class="num">3</td><td>5802.T 住友電工</td><td>電線</td><td class="num">347.8%</td><td><b>採用</b></td></tr><tr class="hold"><td class="num">4</td><td>5803.T フジクラ</td><td>電線</td><td class="num">317.6%</td><td>不採用(電線は上位2銘柄を採用済み)</td></tr><tr class="buy"><td class="num">5</td><td>9984.T ソフトバンクG</td><td>投資</td><td class="num">304.5%</td><td><b>採用</b></td></tr><tr class="buy"><td class="num">6</td><td>6857.T アドバンテスト</td><td>半導体</td><td class="num">238.7%</td><td><b>採用</b></td></tr><tr class="buy"><td class="num">7</td><td>6920.T レーザーテック</td><td>半導体</td><td class="num">195.0%</td><td><b>採用</b></td></tr><tr class="buy"><td class="num">8</td><td>6762.T TDK</td><td>電子部品</td><td class="num">176.3%</td><td><b>採用</b></td></tr><tr class="hold"><td class="num">9</td><td>8035.T 東京エレクトロン</td><td>半導体</td><td class="num">156.3%</td><td>不採用(半導体は上位2銘柄を採用済み)</td></tr><tr class="hold"><td class="num">10</td><td>6723.T ルネサス</td><td>半導体</td><td class="num">142.2%</td><td>不採用(半導体は上位2銘柄を採用済み)</td></tr><tr class="hold"><td class="num">11</td><td>7735.T SCREEN HD</td><td>半導体</td><td class="num">137.7%</td><td>不採用(半導体は上位2銘柄を採用済み)</td></tr><tr class="hold"><td class="num">12</td><td>6146.T ディスコ</td><td>半導体</td><td class="num">128.0%</td><td>不採用(半導体は上位2銘柄を採用済み)</td></tr>
 </table>
 <p>ポイントは2つ。<b>①同じ業種は2銘柄まで</b>(上の表で、順位が高くても3社目は落ちているのが見えます)——現在の相場はAI・データセンター関連に勢いが集中しており、この歯止めがないと8銘柄全部が同じテーマになってしまうためです。<b>②一度買った銘柄は順位16位以内なら保有継続</b>——NISAは売却しても非課税枠が年内に戻らない制度のため、頻繁な売買は構造的に損だからです(この2つのルールは共に過去データで効果を検証してから採用)。</p>
@@ -47,7 +47,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <h2>3. 実際の売買 — 初日から1年間を追体験する</h2>
 <h3>3-1. 投入日(例: 2026-07-06の翌営業日の朝)</h3>
 <p>朝7時までに、証券会社の単元未満株サービス(1株単位で買えるサービス)で以下を成行注文します。当日の前場の始値で約定します。所要時間は15分程度です。</p>
-<table><tr><th>口座</th><th>銘柄</th><th>参考株価</th><th>予算</th><th>注文株数(=予算÷株価を四捨五入)</th></tr>
+<table><thead><tr><th>口座</th><th>銘柄</th><th>参考株価</th><th>予算</th><th>注文株数(=予算÷株価を四捨五入)</th></tr></thead>
 <tr class="buy"><td>NISA</td><td>5801.T 古河電工</td><td class="num">3888円</td><td class="num">240,000円</td><td class="num">62株</td></tr><tr class="buy"><td>NISA</td><td>6981.T 村田製作所</td><td class="num">10250円</td><td class="num">240,000円</td><td class="num">23株</td></tr><tr class="buy"><td>NISA</td><td>5802.T 住友電工</td><td class="num">2593円</td><td class="num">240,000円</td><td class="num">93株</td></tr><tr class="buy"><td>NISA</td><td>9984.T ソフトバンクG</td><td class="num">5979円</td><td class="num">240,000円</td><td class="num">40株</td></tr><tr class="buy"><td>NISA</td><td>6857.T アドバンテスト</td><td class="num">29565円</td><td class="num">240,000円</td><td class="num">8株</td></tr><tr class="buy"><td>NISA</td><td>6920.T レーザーテック</td><td class="num">47040円</td><td class="num">240,000円</td><td class="num">5株</td></tr><tr class="buy"><td>NISA</td><td>6762.T TDK</td><td class="num">3501円</td><td class="num">240,000円</td><td class="num">69株</td></tr><tr class="buy"><td>NISA</td><td>6954.T ファナック</td><td class="num">7477円</td><td class="num">240,000円</td><td class="num">32株</td></tr>
 <tr><td>課税</td><td>5801.T 古河電工</td><td class="num">3888円</td><td class="num">240,000円</td><td class="num">62株</td></tr><tr><td>課税</td><td>6981.T 村田製作所</td><td class="num">10250円</td><td class="num">240,000円</td><td class="num">23株</td></tr>
 </table>
@@ -55,8 +55,8 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 
 <h3>3-2. 毎日の作業(所要3分) — 回転枠の監視</h3>
 <p>見るのは課税口座の2銘柄だけです。例えば 5801.T 古河電工 を3888円で62株買った場合:</p>
-<table>
-<tr><th>状況</th><th>判定ライン</th><th>翌営業日の朝にやること</th></tr>
+<table><thead>
+<tr><th>状況</th><th>判定ライン</th><th>翌営業日の朝にやること</th></tr></thead>
 <tr class="buy"><td>+20%到達(利益確定)</td><td class="num">4666円以上</td><td>全株を成行で売却(利益 約48,211円、税引後 約38,417円)→ その資金で次の候補銘柄を購入</td></tr>
 <tr class="sell"><td>−8%到達(損切り)</td><td class="num">3577円以下</td><td>全株を成行で売却(損失 約19,284円)→ その資金で次の候補銘柄を購入。<b>「戻るまで待つ」はしない</b></td></tr>
 <tr class="hold"><td>どちらでもない</td><td>—</td><td>何もしない(これが大半の日)</td></tr>
@@ -65,7 +65,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 
 <h3>3-2b. 売った後は何を買うのか — 入替候補のリスト(2026-07-06時点、全16銘柄)</h3>
 <p>回転枠の保有は2銘柄ですが、その後ろに<b>入替待ちの候補リスト</b>が控えています。母集団53銘柄のうち「値動きの大きさが上位30%、かつ直近1年モメンタムがプラス」の銘柄を勢い順に並べたもので、毎日再計算されます。売却が出たら、このリストの上から順に(未保有のものを)買います。</p>
-<table><tr><th>順位</th><th>銘柄</th><th>業種</th><th>直近1年の上昇率</th><th>値動きの大きさ(年率)</th><th>状態</th></tr>
+<table><thead><tr><th>順位</th><th>銘柄</th><th>業種</th><th>直近1年の上昇率</th><th>値動きの大きさ(年率)</th><th>状態</th></tr></thead>
 <tr class="buy"><td class="num">1</td><td>5801.T 古河電工</td><td>電線</td><td class="num">603.7%</td><td class="num">79.9%</td><td>今回買付</td></tr><tr class="buy"><td class="num">2</td><td>6981.T 村田製作所</td><td>電子部品</td><td class="num">375.2%</td><td class="num">49.6%</td><td>今回買付</td></tr><tr class="hold"><td class="num">3</td><td>5802.T 住友電工</td><td>電線</td><td class="num">347.8%</td><td class="num">60.8%</td><td>控え</td></tr><tr class="hold"><td class="num">4</td><td>5803.T フジクラ</td><td>電線</td><td class="num">317.6%</td><td class="num">73.1%</td><td>控え</td></tr><tr class="hold"><td class="num">5</td><td>9984.T ソフトバンクG</td><td>投資</td><td class="num">304.5%</td><td class="num">79.0%</td><td>控え</td></tr><tr class="hold"><td class="num">6</td><td>6857.T アドバンテスト</td><td>半導体</td><td class="num">238.7%</td><td class="num">66.6%</td><td>控え</td></tr><tr class="hold"><td class="num">7</td><td>6920.T レーザーテック</td><td>半導体</td><td class="num">195.0%</td><td class="num">66.9%</td><td>控え</td></tr><tr class="hold"><td class="num">8</td><td>6762.T TDK</td><td>電子部品</td><td class="num">176.3%</td><td class="num">48.8%</td><td>控え</td></tr><tr class="hold"><td class="num">9</td><td>8035.T 東京エレクトロン</td><td>半導体</td><td class="num">156.3%</td><td class="num">51.6%</td><td>控え</td></tr><tr class="hold"><td class="num">10</td><td>6723.T ルネサス</td><td>半導体</td><td class="num">142.2%</td><td class="num">59.0%</td><td>控え</td></tr><tr class="hold"><td class="num">11</td><td>7735.T SCREEN HD</td><td>半導体</td><td class="num">137.7%</td><td class="num">55.8%</td><td>控え</td></tr><tr class="hold"><td class="num">12</td><td>6146.T ディスコ</td><td>半導体</td><td class="num">128.0%</td><td class="num">59.6%</td><td>控え</td></tr><tr class="hold"><td class="num">13</td><td>7012.T 川崎重工業</td><td>重工</td><td class="num">36.6%</td><td class="num">52.5%</td><td>控え</td></tr><tr class="hold"><td class="num">14</td><td>6526.T ソシオネクスト</td><td>半導体</td><td class="num">28.4%</td><td class="num">62.4%</td><td>控え</td></tr><tr class="hold"><td class="num">15</td><td>7013.T IHI</td><td>重工</td><td class="num">16.7%</td><td class="num">50.3%</td><td>控え</td></tr><tr class="hold"><td class="num">16</td><td>6594.T ニデック</td><td>モーター</td><td class="num">2.6%</td><td class="num">54.1%</td><td>控え</td></tr>
 </table>
 <div class="warn"><b>正直な注意点</b>: 相場全体が崩れるとこのリストは短くなり、全銘柄のモメンタムがマイナスになれば<b>0件</b>になり得ます。その場合は無理に買わず<b>現金で待機</b>するルールです(下がり続ける相場で値動きの大きい株を買い続けないための安全装置)。また、現在は候補の上位が電線・半導体などAI関連に集中しているため、このテーマの急落時には「損切り→同テーマの次候補→また損切り」が連続する可能性があります。</div>
@@ -78,7 +78,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 
 <h2>4. 過去の検証結果 — 年ごとの成績を全て開示します</h2>
 <p>この運用ルールを過去データに当てはめた結果です(売買コスト0.1%とNISA枠の制度上の制約を含む)。10月開始の1年間ごとに、3指数に勝てたかを示します。</p>
-<table><tr><th>期間</th><th>この運用</th><th>対TOPIX</th><th>対日経平均</th><th>対S&amp;P500円建て</th><th>期間中の最大下落</th><th>3指数勝ち</th></tr>
+<table><thead><tr><th>期間</th><th>この運用</th><th>対TOPIX</th><th>対日経平均</th><th>対S&amp;P500円建て</th><th>期間中の最大下落</th><th>3指数勝ち</th></tr></thead>
 <tr><td>2010-10〜2011-10</td><td class="num">-4.0%</td><td class="num">+4.3pt</td><td class="num">+3.5pt</td><td class="num">+5.3pt</td><td class="num">-29.6%</td><td>○</td></tr><tr><td>2011-10〜2012-10</td><td class="num">+18.6%</td><td class="num">+22.1pt</td><td class="num">+17.5pt</td><td class="num">-11.2pt</td><td class="num">-24.9%</td><td>×</td></tr><tr><td>2012-10〜2013-10</td><td class="num">+125.5%</td><td class="num">+59.7pt</td><td class="num">+60.8pt</td><td class="num">+78.2pt</td><td class="num">-20.6%</td><td>○</td></tr><tr><td>2013-10〜2014-10</td><td class="num">+9.9%</td><td class="num">-2.9pt</td><td class="num">-1.1pt</td><td class="num">-17.9pt</td><td class="num">-20.5%</td><td>×</td></tr><tr><td>2014-10〜2015-10</td><td class="num">-1.9%</td><td class="num">+85.3pt</td><td class="num">-12.1pt</td><td class="num">-10.5pt</td><td class="num">-25.5%</td><td>×</td></tr><tr><td>2015-10〜2016-10</td><td class="num">-7.2%</td><td class="num">-0.8pt</td><td class="num">-0.1pt</td><td class="num">-2.4pt</td><td class="num">-31.5%</td><td>×</td></tr><tr><td>2017-10〜2018-10</td><td class="num">+14.8%</td><td class="num">+3.9pt</td><td class="num">-4.3pt</td><td class="num">-2.8pt</td><td class="num">-24.7%</td><td>×</td></tr><tr><td>2018-10〜2019-10</td><td class="num">+3.7%</td><td class="num">+13.3pt</td><td class="num">+13.4pt</td><td class="num">+8.6pt</td><td class="num">-27.0%</td><td>○</td></tr><tr><td>2019-10〜2020-10</td><td class="num">+43.8%</td><td class="num">+40.2pt</td><td class="num">+37.9pt</td><td class="num">+31.2pt</td><td class="num">-32.0%</td><td>○</td></tr><tr><td>2020-10〜2021-10</td><td class="num">+53.5%</td><td class="num">+28.8pt</td><td class="num">+29.4pt</td><td class="num">+17.4pt</td><td class="num">-14.7%</td><td>○</td></tr><tr><td>2021-10〜2022-10</td><td class="num">-18.1%</td><td class="num">-13.0pt</td><td class="num">-8.3pt</td><td class="num">-24.7pt</td><td class="num">-30.0%</td><td>×</td></tr><tr><td>2022-10〜2023-10</td><td class="num">+48.1%</td><td class="num">+18.3pt</td><td class="num">+25.3pt</td><td class="num">+24.5pt</td><td class="num">-13.9%</td><td>○</td></tr><tr><td>2023-10〜2024-10</td><td class="num">+69.6%</td><td class="num">+51.2pt</td><td class="num">+48.3pt</td><td class="num">+41.5pt</td><td class="num">-37.4%</td><td>○</td></tr><tr><td>2024-10〜2025-10</td><td class="num">+63.3%</td><td class="num">+45.5pt</td><td class="num">+48.1pt</td><td class="num">+43.0pt</td><td class="num">-29.9%</td><td>○</td></tr>
 </table>
 <div class="warn"><b>この表から読み取っていただきたいこと</b><br>
@@ -87,8 +87,8 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 ・検証の限界: 現在生き残っている銘柄で過去を検証しているため実際より良く見える傾向(生存バイアス)があり、2008年リーマン級の暴落はデータ制約で未検証です。<b>実際の成績は表より悪くなる前提</b>でご覧ください</div>
 
 <h2>5. 費用と税金</h2>
-<table>
-<tr><th>項目</th><th>内容</th></tr>
+<table><thead>
+<tr><th>項目</th><th>内容</th></tr></thead>
 <tr><td>売買手数料</td><td>主要ネット証券の単元未満株は買付無料〜0.5%程度(スプレッド含む)。検証では往復0.2%相当を織り込み済み</td></tr>
 <tr><td>信託報酬</td><td>なし(投資信託ではなく個別株のため)</td></tr>
 <tr><td>NISA口座分(192万円)</td><td>値上がり益・配当とも非課税。ただし配当は証券口座で「株式数比例配分方式」を設定した場合のみ非課税</td></tr>
@@ -104,8 +104,8 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 </ol>
 
 <h2>7. よくあるご質問</h2>
-<table>
-<tr><th>Q</th><th>A</th></tr>
+<table><thead>
+<tr><th>Q</th><th>A</th></tr></thead>
 <tr><td>必ず指数に勝てますか?</td><td>いいえ。年単位では負ける年が普通にあります(§4の表のとおり)。目指すのは長期累積での上回りで、それも保証はできません</td></tr>
 <tr><td>なぜ「上がった株を買う」のですか? 高値づかみでは?</td><td>「直近1年上がった株はその後も数か月上がりやすい」というモメンタム効果は、過去数十年・世界中の市場で確認されてきた現象です(ノーベル賞学者ファーマらの研究でも「最大の未解明アノマリー」とされます)。ただし急反転(モメンタムクラッシュ)に弱いことも知られており、その対策が業種上限・損切り・撤退基準です</td></tr>
 <tr><td>今はAI関連に偏っていて危なくないですか?</td><td>偏っています(§2の内訳参照)。このテーマが崩れれば指数より大きく下がる可能性が高いです。業種上限で8銘柄中の同一業種は2銘柄までに抑え、崩れた場合は3か月ごとの見直しで自動的に別の業種へ乗り換わりますが、乗り換わるまでの1〜2四半期は損失を受け止めることになります</td></tr>
@@ -117,5 +117,5 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <h2>8. 免責事項</h2>
 <p class="small">本資料は情報提供のみを目的とし、投資助言・代理・勧誘を行うものではありません。掲載内容は作成日時点の情報に基づき、予告なく変更されることがあります。過去の実績およびシミュレーションは将来の成果を示唆・保証するものではありません。株式投資は元本を割り込むおそれがあります。投資に関する最終決定は、ご自身の判断と責任で行ってください。本資料に基づいて被ったいかなる損害についても、作成者は責任を負いません。</p>
 
-<p class="small">生成: 2026-07-06 10:50 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+<p class="small">生成: 2026-07-06 10:57 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
 </body></html>

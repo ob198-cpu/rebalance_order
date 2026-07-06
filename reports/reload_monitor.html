@@ -11,10 +11,10 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 .small{font-size:12px;color:#5a6b78}
 .check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
 /* PDF印刷時の改ページ制御: 見出し直後・表の行・注意ボックスの途中で切らない */
+thead { display: table-header-group; } /* 表が改ページをまたぐ時、次ページ先頭にヘッダ行を再表示 */
 @media print {
-  h1, h2, h3 { break-after: avoid-page; }
-  tr, .ok, .warn, .danger { break-inside: avoid; }
-  table { break-before: avoid-page; }
+  h1, h2, h3 { break-after: avoid-page; page-break-after: avoid; break-inside: avoid; }
+  tr, .ok, .warn, .danger { break-inside: avoid; page-break-inside: avoid; }
   p { orphans: 3; widows: 3; }
 }
 </style></head><body>
@@ -28,7 +28,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 
 <h2>2. 入替候補プール 全16銘柄 (高ボラ上位30% × 12-1か月モメンタム正、モメンタム順)</h2>
 <p>トリガー発生時は、このリストの<b>未保有の最上位</b>を翌営業日寄付で買う。リストは毎日再計算される。</p>
-<table><tr><th>順位</th><th>銘柄</th><th>業種</th><th>直近終値</th><th>12-1か月モメンタム</th><th>年率ボラ</th><th>状態</th></tr>
+<table><thead><tr><th>順位</th><th>銘柄</th><th>業種</th><th>直近終値</th><th>12-1か月モメンタム</th><th>年率ボラ</th><th>状態</th></tr></thead>
 <tr class=""><td class="num">1</td><td>5801.T 古河電工</td><td>電線</td><td class="num">3888</td><td class="num">603.7%</td><td class="num">79.9%</td><td>控え</td></tr><tr class=""><td class="num">2</td><td>6981.T 村田製作所</td><td>電子部品</td><td class="num">10250</td><td class="num">375.2%</td><td class="num">49.6%</td><td>控え</td></tr><tr class=""><td class="num">3</td><td>5802.T 住友電工</td><td>電線</td><td class="num">2593</td><td class="num">347.8%</td><td class="num">60.8%</td><td>控え</td></tr><tr class=""><td class="num">4</td><td>5803.T フジクラ</td><td>電線</td><td class="num">5354</td><td class="num">317.6%</td><td class="num">73.1%</td><td>控え</td></tr><tr class=""><td class="num">5</td><td>9984.T ソフトバンクG</td><td>投資</td><td class="num">5979</td><td class="num">304.5%</td><td class="num">79.0%</td><td>控え</td></tr><tr class=""><td class="num">6</td><td>6857.T アドバンテスト</td><td>半導体</td><td class="num">29565</td><td class="num">238.7%</td><td class="num">66.6%</td><td>控え</td></tr><tr class=""><td class="num">7</td><td>6920.T レーザーテック</td><td>半導体</td><td class="num">47040</td><td class="num">195.0%</td><td class="num">66.9%</td><td>控え</td></tr><tr class=""><td class="num">8</td><td>6762.T TDK</td><td>電子部品</td><td class="num">3501</td><td class="num">176.3%</td><td class="num">48.8%</td><td>控え</td></tr><tr class=""><td class="num">9</td><td>8035.T 東京エレクトロン</td><td>半導体</td><td class="num">72320</td><td class="num">156.3%</td><td class="num">51.6%</td><td>控え</td></tr><tr class=""><td class="num">10</td><td>6723.T ルネサス</td><td>半導体</td><td class="num">4710</td><td class="num">142.2%</td><td class="num">59.0%</td><td>控え</td></tr><tr class=""><td class="num">11</td><td>7735.T SCREEN HD</td><td>半導体</td><td class="num">17860</td><td class="num">137.7%</td><td class="num">55.8%</td><td>控え</td></tr><tr class=""><td class="num">12</td><td>6146.T ディスコ</td><td>半導体</td><td class="num">78000</td><td class="num">128.0%</td><td class="num">59.6%</td><td>控え</td></tr><tr class=""><td class="num">13</td><td>7012.T 川崎重工業</td><td>重工</td><td class="num">3003</td><td class="num">36.6%</td><td class="num">52.5%</td><td>控え</td></tr><tr class=""><td class="num">14</td><td>6526.T ソシオネクスト</td><td>半導体</td><td class="num">2700</td><td class="num">28.4%</td><td class="num">62.4%</td><td>控え</td></tr><tr class=""><td class="num">15</td><td>7013.T IHI</td><td>重工</td><td class="num">3071</td><td class="num">16.7%</td><td class="num">50.3%</td><td>控え</td></tr><tr class=""><td class="num">16</td><td>6594.T ニデック</td><td>モーター</td><td class="num">2708</td><td class="num">2.6%</td><td class="num">54.1%</td><td>控え</td></tr>
 </table>
 <p class="small">候補が空の場合(全銘柄モメンタム負など)は入替を行わず現金で待機する。プールが痩せてきたら(数銘柄以下)相場全体の悪化サイン。</p>
@@ -38,5 +38,5 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <li>売却: <code>node src/record_trade.mjs reload-sell 銘柄 約定単価</code>(実現損益とトリガー乖離を自動記録)</li>
 <li>買付: <code>node src/record_trade.mjs reload-buy 銘柄 約定単価 株数</code>(利確/損切ラインを自動表示)</li>
 </ol>
-<p class="small">生成: 2026-07-06 10:50 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+<p class="small">生成: 2026-07-06 10:57 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
 </body></html>

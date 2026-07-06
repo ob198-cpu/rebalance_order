@@ -10,6 +10,13 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 .danger{background:#fdecec;border:1px solid #c0392b;padding:12px;border-radius:8px;margin:12px 0}
 .small{font-size:12px;color:#5a6b78}
 .check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
+/* PDF印刷時の改ページ制御: 見出し直後・表の行・注意ボックスの途中で切らない */
+thead { display: table-header-group; } /* 表が改ページをまたぐ時、次ページ先頭にヘッダ行を再表示 */
+@media print {
+  h1, h2, h3 { break-after: avoid-page; page-break-after: avoid; break-inside: avoid; }
+  tr, .ok, .warn, .danger { break-inside: avoid; page-break-inside: avoid; }
+  p { orphans: 3; widows: 3; }
+}
 </style></head><body>
 <h1>リバランス指示書 (基準日: 2026-07-06)</h1>
 
@@ -29,7 +36,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 ・<b>記録</b>: 約定ごとに <code>node src/record_trade.mjs sat-buy 銘柄 約定単価 株数</code>(リロードは reload-buy)。JSONの手編集は禁止</div>
 
 <h2>1. NISA枠の状態</h2>
-<table><tr><th>年間枠(合計)</th><th>使用済み</th><th>残枠</th><th>今回指示の消費</th><th>指示実行後の残枠</th></tr>
+<table><thead><tr><th>年間枠(合計)</th><th>使用済み</th><th>残枠</th><th>今回指示の消費</th><th>指示実行後の残枠</th></tr></thead>
 <tr><td class="num">2,400,000円</td><td class="num">0円</td><td class="num">2,400,000円</td><td class="num">1,920,000円</td><td class="num">480,000円</td></tr></table>
 <div class="ok">今回の指示はすべて残枠内に収まっています。</div>
 
@@ -37,7 +44,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <p>G案(2026-07-06)によりコアETFは廃止。全額を個別株サテライト+リロード枠に配分。(参考: 12-1か月モメンタム: TOPIX 45.7% / 日経平均 76.4% / S&P500円建て 37.2%)</p>
 
 <h2>3. サテライト (NISA口座 / 目標 1,920,000円、1銘柄 240,000円)</h2>
-<table><tr><th>操作</th><th>銘柄</th><th>直近終値(生値)</th><th>金額目安</th><th>株数目安</th><th>根拠 (12-1か月モメンタム / 母集団内順位)</th></tr>
+<table><thead><tr><th>操作</th><th>銘柄</th><th>直近終値(生値)</th><th>金額目安</th><th>株数目安</th><th>根拠 (12-1か月モメンタム / 母集団内順位)</th></tr></thead>
 
 
 <tr class="buy"><td>買付</td><td>5801.T 古河電工</td><td class="num">3888</td><td class="num">240,000円</td><td class="num">62株</td><td>モメンタム 603.7%(順位 1位)、年率ボラ 79.9%、セクター: 電線(1業種2銘柄まで)。</td></tr><tr class="buy"><td>買付</td><td>6981.T 村田製作所</td><td class="num">10250</td><td class="num">240,000円</td><td class="num">23株</td><td>モメンタム 375.2%(順位 2位)、年率ボラ 49.6%、セクター: 電子部品(1業種2銘柄まで)。</td></tr><tr class="buy"><td>買付</td><td>5802.T 住友電工</td><td class="num">2593</td><td class="num">240,000円</td><td class="num">93株</td><td>モメンタム 347.8%(順位 3位)、年率ボラ 60.8%、セクター: 電線(1業種2銘柄まで)。</td></tr><tr class="buy"><td>買付</td><td>9984.T ソフトバンクG</td><td class="num">5979</td><td class="num">240,000円</td><td class="num">40株</td><td>モメンタム 304.5%(順位 5位)、年率ボラ 79.0%、セクター: 投資(1業種2銘柄まで)。</td></tr><tr class="buy"><td>買付</td><td>6857.T アドバンテスト</td><td class="num">29565</td><td class="num">240,000円</td><td class="num">8株</td><td>モメンタム 238.7%(順位 6位)、年率ボラ 66.6%、セクター: 半導体(1業種2銘柄まで)。</td></tr><tr class="buy"><td>買付</td><td>6920.T レーザーテック</td><td class="num">47040</td><td class="num">240,000円</td><td class="num">5株</td><td>モメンタム 195.0%(順位 7位)、年率ボラ 66.9%、セクター: 半導体(1業種2銘柄まで)。</td></tr><tr class="buy"><td>買付</td><td>6762.T TDK</td><td class="num">3501</td><td class="num">240,000円</td><td class="num">69株</td><td>モメンタム 176.3%(順位 8位)、年率ボラ 48.8%、セクター: 電子部品(1業種2銘柄まで)。</td></tr><tr class="buy"><td>買付</td><td>6954.T ファナック</td><td class="num">7477</td><td class="num">240,000円</td><td class="num">32株</td><td>モメンタム 109.8%(順位 14位)、年率ボラ 47.9%、セクター: FA(1業種2銘柄まで)。</td></tr>
@@ -46,12 +53,12 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 
 <h2>4. リロード枠 (課税口座 / 目標 480,000円、2銘柄)</h2>
 
-<table><tr><th>操作</th><th>銘柄</th><th>直近終値(生値)</th><th>金額目安</th><th>株数目安</th><th>根拠</th></tr>
+<table><thead><tr><th>操作</th><th>銘柄</th><th>直近終値(生値)</th><th>金額目安</th><th>株数目安</th><th>根拠</th></tr></thead>
 <tr class="buy"><td>買付</td><td>5801.T 古河電工</td><td class="num">3888</td><td class="num">240,000円</td><td class="num">62株</td><td>高ボラ(年率 79.9%)×モメンタム 603.7%。+20%で利確 / -8%で損切りし、次候補へ入替。約定単価を必ず記録(±判定の基準)。</td></tr><tr class="buy"><td>買付</td><td>6981.T 村田製作所</td><td class="num">10250</td><td class="num">240,000円</td><td class="num">23株</td><td>高ボラ(年率 49.6%)×モメンタム 375.2%。+20%で利確 / -8%で損切りし、次候補へ入替。約定単価を必ず記録(±判定の基準)。</td></tr></table>
 
 <h2>5. 発注前の確認 (事業毀損チェック)</h2>
 <p>買付対象の各銘柄について、以下に1つでも該当すればその銘柄は買わない(configのsell_rules準拠)。確認して□を埋めること。</p>
-<table><tr><th>銘柄</th><th>下方修正</th><th>赤字転落</th><th>重大不祥事</th><th>主力需要崩壊</th><th>信用不安</th></tr>
+<table><thead><tr><th>銘柄</th><th>下方修正</th><th>赤字転落</th><th>重大不祥事</th><th>主力需要崩壊</th><th>信用不安</th></tr></thead>
 <tr><td>5801.T 古河電工</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>6981.T 村田製作所</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>5802.T 住友電工</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>9984.T ソフトバンクG</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>6857.T アドバンテスト</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>6920.T レーザーテック</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>6762.T TDK</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>6954.T ファナック</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>5801.T 古河電工</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr><tr><td>6981.T 村田製作所</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td><td><span class="check"></span>なし</td></tr>
 </table>
 
@@ -63,5 +70,5 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <li>裁量変更をした場合は末尾に <code>-- override "理由"</code> を付ける。</li>
 <li>全件記録後 <code>node src/record_trade.mjs status</code> で残枠・保有・利確損切ラインを確認する。</li>
 </ol>
-<p class="small">生成: 2026-07-06 09:01 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+<p class="small">生成: 2026-07-06 10:57 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
 </body></html>

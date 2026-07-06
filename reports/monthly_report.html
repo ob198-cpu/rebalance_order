@@ -10,6 +10,13 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 .danger{background:#fdecec;border:1px solid #c0392b;padding:12px;border-radius:8px;margin:12px 0}
 .small{font-size:12px;color:#5a6b78}
 .check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
+/* PDF印刷時の改ページ制御: 見出し直後・表の行・注意ボックスの途中で切らない */
+thead { display: table-header-group; } /* 表が改ページをまたぐ時、次ページ先頭にヘッダ行を再表示 */
+@media print {
+  h1, h2, h3 { break-after: avoid-page; page-break-after: avoid; break-inside: avoid; }
+  tr, .ok, .warn, .danger { break-inside: avoid; page-break-inside: avoid; }
+  p { orphans: 3; widows: 3; }
+}
 </style></head><body>
 <h1>月次レポート (基準日: 2026-07-06)</h1>
 
@@ -17,7 +24,7 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 
 <h2>1. 3指数の12か月ローリングリターン (2025-07-06 → 2026-07-06)</h2>
 <p>運用目標は「3指数すべてに+1%」。ポートフォリオ実績との比較は、投入後に取得単価ベースで本表に追加される。</p>
-<table><tr><th>指数</th><th>12か月リターン</th><th>12か月最大DD</th><th>意味と行動</th></tr>
+<table><thead><tr><th>指数</th><th>12か月リターン</th><th>12か月最大DD</th><th>意味と行動</th></tr></thead>
 <tr><td>TOPIX配当込み(1306.T調整後)</td><td class="num">48.3%</td><td class="num">-11.4%</td><td rowspan="3">自ポートフォリオの12か月リターンが3指数それぞれ+1%を上回っているか毎月確認する。2四半期連続で3指数すべてに劣後した場合は、年次レビューを待たず構成の再検証を提案する。</td></tr>
 <tr><td>日経平均</td><td class="num">75.2%</td><td class="num">-13.2%</td></tr>
 <tr><td>S&P500円建て</td><td class="num">33.0%</td><td class="num">-8.1%</td></tr>
@@ -30,14 +37,14 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <p>保有なし。</p>
 
 <h2>4. リロード枠 実現損益と税引後試算 (課税口座)</h2>
-<table><tr><th>年初来 実現損益(decisions.csv記録分)</th><th>税率</th><th>税引後</th></tr>
+<table><thead><tr><th>年初来 実現損益(decisions.csv記録分)</th><th>税率</th><th>税引後</th></tr></thead>
 <tr><td class="num">0円</td><td class="num">20.315%</td><td class="num">0円</td></tr></table>
 <p class="small">record_trade.mjs reload-sell が自動記録する。損失はマイナス値で通算。</p>
 
 
 <h2>5. NISA枠の状態</h2>
-<table><tr><th>年間枠</th><th>使用済み</th><th>残枠</th><th>生涯枠(成長・概算)</th></tr>
+<table><thead><tr><th>年間枠</th><th>使用済み</th><th>残枠</th><th>生涯枠(成長・概算)</th></tr></thead>
 <tr><td class="num">2,400,000円</td><td class="num">0円</td><td class="num">2,400,000円</td><td class="num">0円 / 12,000,000円</td></tr></table>
 <p class="small">生涯枠は簿価残高方式(売却分の簿価は翌年復活)。record_trade.mjsの概算値のため、毎年1月に証券会社のNISA残高画面と照合すること。</p>
-<p class="small">生成: 2026-07-06 09:01 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+<p class="small">生成: 2026-07-06 10:57 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
 </body></html>
