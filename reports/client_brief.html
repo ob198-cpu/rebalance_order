@@ -10,6 +10,13 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 .danger{background:#fdecec;border:1px solid #c0392b;padding:12px;border-radius:8px;margin:12px 0}
 .small{font-size:12px;color:#5a6b78}
 .check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
+/* PDF印刷時の改ページ制御: 見出し直後・表の行・注意ボックスの途中で切らない */
+@media print {
+  h1, h2, h3 { break-after: avoid-page; }
+  tr, .ok, .warn, .danger { break-inside: avoid; }
+  table { break-before: avoid-page; }
+  p { orphans: 3; widows: 3; }
+}
 </style></head><body>
 <h1>NISA Alpha 運用のご説明 — 詳細版 (基準日: 2026-07-06)</h1>
 
@@ -54,7 +61,14 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <tr class="sell"><td>−8%到達(損切り)</td><td class="num">3577円以下</td><td>全株を成行で売却(損失 約19,284円)→ その資金で次の候補銘柄を購入。<b>「戻るまで待つ」はしない</b></td></tr>
 <tr class="hold"><td>どちらでもない</td><td>—</td><td>何もしない(これが大半の日)</td></tr>
 </table>
-<p class="small">夜間の悪材料で翌朝−8%を大きく超えて始まる場合も、寄付の成行で機械的に売ります(過去の急落局面で「待った」場合の方が損失が拡大しやすいため)。候補銘柄が全滅(全銘柄が下落基調)の場合は買い直さず現金で待機します。</p>
+<p class="small">夜間の悪材料で翌朝−8%を大きく超えて始まる場合も、寄付の成行で機械的に売ります(過去の急落局面で「待った」場合の方が損失が拡大しやすいため)。</p>
+
+<h3>3-2b. 売った後は何を買うのか — 入替候補のリスト(2026-07-06時点、全16銘柄)</h3>
+<p>回転枠の保有は2銘柄ですが、その後ろに<b>入替待ちの候補リスト</b>が控えています。母集団53銘柄のうち「値動きの大きさが上位30%、かつ直近1年モメンタムがプラス」の銘柄を勢い順に並べたもので、毎日再計算されます。売却が出たら、このリストの上から順に(未保有のものを)買います。</p>
+<table><tr><th>順位</th><th>銘柄</th><th>業種</th><th>直近1年の上昇率</th><th>値動きの大きさ(年率)</th><th>状態</th></tr>
+<tr class="buy"><td class="num">1</td><td>5801.T 古河電工</td><td>電線</td><td class="num">603.7%</td><td class="num">79.9%</td><td>今回買付</td></tr><tr class="buy"><td class="num">2</td><td>6981.T 村田製作所</td><td>電子部品</td><td class="num">375.2%</td><td class="num">49.6%</td><td>今回買付</td></tr><tr class="hold"><td class="num">3</td><td>5802.T 住友電工</td><td>電線</td><td class="num">347.8%</td><td class="num">60.8%</td><td>控え</td></tr><tr class="hold"><td class="num">4</td><td>5803.T フジクラ</td><td>電線</td><td class="num">317.6%</td><td class="num">73.1%</td><td>控え</td></tr><tr class="hold"><td class="num">5</td><td>9984.T ソフトバンクG</td><td>投資</td><td class="num">304.5%</td><td class="num">79.0%</td><td>控え</td></tr><tr class="hold"><td class="num">6</td><td>6857.T アドバンテスト</td><td>半導体</td><td class="num">238.7%</td><td class="num">66.6%</td><td>控え</td></tr><tr class="hold"><td class="num">7</td><td>6920.T レーザーテック</td><td>半導体</td><td class="num">195.0%</td><td class="num">66.9%</td><td>控え</td></tr><tr class="hold"><td class="num">8</td><td>6762.T TDK</td><td>電子部品</td><td class="num">176.3%</td><td class="num">48.8%</td><td>控え</td></tr><tr class="hold"><td class="num">9</td><td>8035.T 東京エレクトロン</td><td>半導体</td><td class="num">156.3%</td><td class="num">51.6%</td><td>控え</td></tr><tr class="hold"><td class="num">10</td><td>6723.T ルネサス</td><td>半導体</td><td class="num">142.2%</td><td class="num">59.0%</td><td>控え</td></tr><tr class="hold"><td class="num">11</td><td>7735.T SCREEN HD</td><td>半導体</td><td class="num">137.7%</td><td class="num">55.8%</td><td>控え</td></tr><tr class="hold"><td class="num">12</td><td>6146.T ディスコ</td><td>半導体</td><td class="num">128.0%</td><td class="num">59.6%</td><td>控え</td></tr><tr class="hold"><td class="num">13</td><td>7012.T 川崎重工業</td><td>重工</td><td class="num">36.6%</td><td class="num">52.5%</td><td>控え</td></tr><tr class="hold"><td class="num">14</td><td>6526.T ソシオネクスト</td><td>半導体</td><td class="num">28.4%</td><td class="num">62.4%</td><td>控え</td></tr><tr class="hold"><td class="num">15</td><td>7013.T IHI</td><td>重工</td><td class="num">16.7%</td><td class="num">50.3%</td><td>控え</td></tr><tr class="hold"><td class="num">16</td><td>6594.T ニデック</td><td>モーター</td><td class="num">2.6%</td><td class="num">54.1%</td><td>控え</td></tr>
+</table>
+<div class="warn"><b>正直な注意点</b>: 相場全体が崩れるとこのリストは短くなり、全銘柄のモメンタムがマイナスになれば<b>0件</b>になり得ます。その場合は無理に買わず<b>現金で待機</b>するルールです(下がり続ける相場で値動きの大きい株を買い続けないための安全装置)。また、現在は候補の上位が電線・半導体などAI関連に集中しているため、このテーマの急落時には「損切り→同テーマの次候補→また損切り」が連続する可能性があります。</div>
 
 <h3>3-3. 3か月ごとの見直し(所要30分)</h3>
 <p>ランキングを再計算し、差分だけ売買します。<b>実例</b>: 直近では価格データを7/2→7/6に更新した際、三菱電機が圏外に落ちてファナックが繰り上がりました。このように入替は通常1〜2銘柄で、8銘柄総入替のようなことはルール上起きにくい設計です(順位16位以内は保有継続のため)。売る場合の理由は「順位が16位より下に落ちた」「業績の下方修正・不祥事等が出た」の2つだけです。</p>
@@ -103,5 +117,5 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <h2>8. 免責事項</h2>
 <p class="small">本資料は情報提供のみを目的とし、投資助言・代理・勧誘を行うものではありません。掲載内容は作成日時点の情報に基づき、予告なく変更されることがあります。過去の実績およびシミュレーションは将来の成果を示唆・保証するものではありません。株式投資は元本を割り込むおそれがあります。投資に関する最終決定は、ご自身の判断と責任で行ってください。本資料に基づいて被ったいかなる損害についても、作成者は責任を負いません。</p>
 
-<p class="small">生成: 2026-07-06 10:38 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+<p class="small">生成: 2026-07-06 10:50 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
 </body></html>

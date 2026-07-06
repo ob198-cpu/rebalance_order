@@ -10,6 +10,13 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 .danger{background:#fdecec;border:1px solid #c0392b;padding:12px;border-radius:8px;margin:12px 0}
 .small{font-size:12px;color:#5a6b78}
 .check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
+/* PDF印刷時の改ページ制御: 見出し直後・表の行・注意ボックスの途中で切らない */
+@media print {
+  h1, h2, h3 { break-after: avoid-page; }
+  tr, .ok, .warn, .danger { break-inside: avoid; }
+  table { break-before: avoid-page; }
+  p { orphans: 3; widows: 3; }
+}
 </style></head><body>
 <h1>NISA Alpha 運用方針書 v2 (H1案 / 基準日: 2026-07-06)</h1>
 <p class="small">生成元: config/plan.json(正本)・data/prices・reports/backtest_*。旧版(2026-07-03)は本書で置き換える。変更履歴は config/change_log.csv。</p>
@@ -116,5 +123,5 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 <li><b>結論</b>: 実運用の期待値はバックテストの数字より下と見るべき。撤退基準(2四半期連続劣後)の遵守が最後の防衛線</li>
 </ol>
 
-<p class="small">生成: 2026-07-06 10:03 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+<p class="small">生成: 2026-07-06 10:50 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
 </body></html>
