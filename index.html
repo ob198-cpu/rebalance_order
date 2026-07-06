@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NISA Alpha Operation Reports</title>
+  <title>NISA Alpha 運用のご案内</title>
   <style>
     body {
       font-family: Meiryo, "Noto Sans JP", sans-serif;
@@ -13,10 +13,11 @@
       max-width: 920px;
     }
     h1 { color: #0b4f79; font-size: 24px; }
+    h2 { color: #0b4f79; font-size: 17px; margin-top: 28px; }
     .links {
       display: grid;
       gap: 12px;
-      margin-top: 24px;
+      margin-top: 16px;
     }
     a.report {
       display: block;
@@ -28,38 +29,53 @@
       background: #f7fbfe;
     }
     a.report:hover { background: #e8f3fa; }
+    a.internal { background: #fafafa; border-color: #d5dde3; color: #45596b; }
     .small { color: #5a6b78; font-size: 13px; }
+    .notice {
+      background: #fff4e5; border: 1px solid #e6a23c;
+      padding: 12px 14px; border-radius: 8px; margin-top: 16px; font-size: 13.5px;
+    }
   </style>
 </head>
 <body>
-  <h1>NISA Alpha Operation Reports</h1>
-  <p>運用で使うHTMLレポートへの入口です。GitHub Pages上で以下の帳票を開けます。各HTMLは単体で表示でき、発注・日次監視・月次確認の入口になります。</p>
+  <h1>NISA Alpha 運用のご案内</h1>
+  <p>NISA口座を使った、ルールに基づく日本株運用のご説明ページです。運用の考え方・銘柄の選び方・リスク・過去の検証結果を、専門用語を避けてまとめています。</p>
+
+  <div class="notice"><b>ご注意</b>: 本サイトは運用方針の情報提供を目的としたものであり、投資助言・勧誘ではありません。掲載のシミュレーションは将来の成果を保証しません。投資判断はご自身の責任でお願いいたします。</div>
+
+  <h2>お客様向け資料</h2>
   <div class="links">
-    <a class="report" href="reports/operations_manual_v2.html">
-      <b>運用方針書 v2 (2026-07-06 / H1案)</b><br>
-      運用ルール・銘柄選定根拠・発注指示・変更ルール・シミュレーション結果の全文
+    <a class="report" href="reports/client_brief.html">
+      <b>運用のご説明(まずはこちら)</b><br>
+      何を目指し、どう銘柄を選び、どんなリスクがあるか——専門用語を使わないご説明
     </a>
-    <a class="report" href="reports/operations_manual_v2_20260706.pdf">
-      <b>運用方針書 v2 PDF版</b><br>
-      上記と同内容の保存・印刷用PDF
+    <a class="report" href="reports/client_brief_20260706.pdf">
+      <b>運用のご説明 PDF版</b><br>
+      上記と同じ内容の保存・印刷用PDF
     </a>
     <a class="report" href="reports/scenario_rehearsal_20260706.html">
-      <b>シナリオ・リハーサル (2026-07-06)</b><br>
-      実際のニュースに基づく6シナリオの事前訓練と事前コミットメント
-    </a>
-    <a class="report" href="reports/rebalance_order.html">
-      <b>四半期・年次の発注内容</b><br>
-      これだけで発注内容を確認できるリバランス指示書
-    </a>
-    <a class="report" href="reports/reload_monitor.html">
-      <b>日次のリロード枠トリガー判定</b><br>
-      利確・損切り・次候補を確認する日次モニタ
-    </a>
-    <a class="report" href="reports/monthly_report.html">
-      <b>月次の3指数比較・チェックリスト</b><br>
-      TOPIX、日経平均、S&amp;P500円建てとの比較と運用確認
+      <b>相場急変時にどう動くか(シナリオ別の対応)</b><br>
+      急落・円高・地政学ショックなど6つの局面での対応をあらかじめ決めた資料
     </a>
   </div>
-  <p class="small">Generated from nisa_alpha. These materials are operation aids, not investment advice.</p>
+
+  <h2>運用の詳細資料(技術的な内容を含みます)</h2>
+  <div class="links">
+    <a class="report internal" href="reports/operations_manual_v2.html">
+      運用方針書(完全版) — 選定ルールの数式・検証データ・変更規律の全文
+      (<span class="small">PDF版は reports/operations_manual_v2_20260706.pdf</span>)
+    </a>
+    <a class="report internal" href="reports/rebalance_order.html">
+      リバランス指示書 — 直近の売買内容(運用者の作業用)
+    </a>
+    <a class="report internal" href="reports/reload_monitor.html">
+      日次モニタ — 利益確定・損切りの判定(運用者の作業用)
+    </a>
+    <a class="report internal" href="reports/monthly_report.html">
+      月次レポート — 3指数との成績比較(運用者の作業用)
+    </a>
+  </div>
+
+  <p class="small">Generated from nisa_alpha. 本サイトの資料は運用記録・情報提供であり、投資助言ではありません。</p>
 </body>
 </html>
