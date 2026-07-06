@@ -1,0 +1,103 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>NISA Alpha 運用方針書 v2</title>
+<style>
+body{font-family:Meiryo,"Noto Sans JP",sans-serif;color:#102333;line-height:1.75;margin:28px;max-width:1080px}
+h1{color:#0b4f79;font-size:22px}h2{color:#0b4f79;font-size:18px;margin-top:28px;border-bottom:2px solid #d5e5f0;padding-bottom:4px}
+table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #bfd6e6;padding:7px 9px;vertical-align:top;font-size:13.5px}
+th{background:#e8f3fa;text-align:left}td.num{text-align:right}
+.buy{background:#eefaf4}.sell{background:#fdecec}.hold{background:#fafafa}
+.warn{background:#fff4e5;border:1px solid #e6a23c;padding:12px;border-radius:8px;margin:12px 0}
+.ok{background:#eefaf4;border:1px solid #41a36f;padding:12px;border-radius:8px;margin:12px 0}
+.danger{background:#fdecec;border:1px solid #c0392b;padding:12px;border-radius:8px;margin:12px 0}
+.small{font-size:12px;color:#5a6b78}
+.check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
+</style></head><body>
+<h1>NISA Alpha 運用方針書 v2 (H1案 / 基準日: 2026-07-02)</h1>
+<p class="small">生成元: config/plan.json(正本)・data/prices・reports/backtest_*。旧版(2026-07-03)は本書で置き換える。変更履歴は config/change_log.csv。</p>
+
+<h2>1. 運用ルール(全体像)</h2>
+<table>
+<tr><th>項目</th><th>内容</th></tr>
+<tr><td>資金</td><td>2,400,000円(NISA成長投資枠 年間2,400,000円)</td></tr>
+<tr><td>サテライト 80%</td><td>1,920,000円。個別株8銘柄 × 240,000円(NISA口座)。四半期リバランス</td></tr>
+<tr><td>リロード枠 20%</td><td>480,000円。高ボラ×モメンタム2銘柄 × 240,000円(<b>課税口座</b>)。+20%利確 / -8%損切りで即入替</td></tr>
+<tr><td>コア</td><td>なし(G案 2026-07-06 でETFコアを廃止)</td></tr>
+<tr><td>目標</td><td>TOPIX配当込み・日経平均・S&P500円建ての3指数すべてに+1%(ユーザーが2026-07-03にTOPIX単独主軸案を非承認)</td></tr>
+</table>
+
+<h3>銘柄選定ルール(サテライト)</h3>
+<ol>
+<li><b>母集団</b>: 東証プライム・時価総額0.2兆円換算2,000億円以上・平均売買代金10億円以上(現在53銘柄)。毎年1月に同一基準で再抽出</li>
+<li><b>モメンタム</b>: 12-1か月(直近1か月を除く12か月リターン)で全銘柄をランク付け</li>
+<li><b>セクター上限</b>: 同一業種は2銘柄まで(電線・半導体等の単一テーマ集中を防止)</li>
+<li><b>ランクバッファ</b>: 保有銘柄は順位16位以内なら売却せず保持(回転とNISA枠消費の抑制)。空き枠を上位銘柄で充足</li>
+<li><b>事業毀損チェック</b>: 下方修正・赤字転落・重大不祥事・主力需要崩壊・信用不安のいずれかに該当する銘柄は買わない/保有中なら翌営業日に売却判断</li>
+</ol>
+<h3>銘柄選定ルール(リロード枠)</h3>
+<p>母集団のうち年率ボラティリティ上位30%かつ12-1か月モメンタム正の銘柄をモメンタム順に2銘柄。トリガー(+20% / -8%)で全量売却し、次候補の最上位未保有銘柄へ即時入替。候補が空なら現金待機。</p>
+
+<h2>2. 現在の選定結果と根拠(2026-07-02時点)</h2>
+<h3>サテライト 8銘柄(セクター内訳: 電線2・電子部品2・投資1・半導体2・総合電機1)</h3>
+<table><tr><th>順位</th><th>銘柄</th><th>セクター</th><th>12-1か月モメンタム</th><th>年率ボラ</th><th>直近終値</th></tr>
+<tr><td class="num">1</td><td>5801.T 古河電工</td><td>電線</td><td class="num">655.2%</td><td class="num">79.6%</td><td class="num">4351</td></tr><tr><td class="num">2</td><td>6981.T 村田製作所</td><td>電子部品</td><td class="num">404.6%</td><td class="num">49.1%</td><td class="num">11890</td></tr><tr><td class="num">3</td><td>9984.T ソフトバンクG</td><td>投資</td><td class="num">370.7%</td><td class="num">77.7%</td><td class="num">6000</td></tr><tr><td class="num">4</td><td>5802.T 住友電工</td><td>電線</td><td class="num">341.8%</td><td class="num">60.1%</td><td class="num">2834</td></tr><tr><td class="num">6</td><td>6857.T アドバンテスト</td><td>半導体</td><td class="num">272.5%</td><td class="num">66.2%</td><td class="num">32000</td></tr><tr><td class="num">7</td><td>6920.T レーザーテック</td><td>半導体</td><td class="num">182.2%</td><td class="num">66.7%</td><td class="num">50790</td></tr><tr><td class="num">9</td><td>6762.T TDK</td><td>電子部品</td><td class="num">154.9%</td><td class="num">48.7%</td><td class="num">3700</td></tr><tr><td class="num">12</td><td>6503.T 三菱電機</td><td>総合電機</td><td class="num">110.9%</td><td class="num">36.9%</td><td class="num">6034</td></tr>
+</table>
+<p class="small">選定から漏れた高順位銘柄はセクター上限による(例: 同一業種3位以下)。全銘柄のスコアは reports/ 配下の検証CSVで確認可能。</p>
+<h3>リロード枠 2銘柄</h3>
+<table><tr><th>銘柄</th><th>セクター</th><th>モメンタム</th><th>年率ボラ</th></tr>
+<tr><td>5801.T 古河電工</td><td>電線</td><td class="num">655.2%</td><td class="num">79.6%</td></tr><tr><td>6981.T 村田製作所</td><td>電子部品</td><td class="num">404.6%</td><td class="num">49.1%</td></tr>
+</table>
+
+<h2>3. 発注指示(何を・いつ・いくら)</h2>
+<h3>3-1. 初回投入(未投入の場合)</h3>
+<table><tr><th>口座</th><th>銘柄</th><th>金額</th><th>株数目安(基準日終値)</th></tr>
+<tr class="buy"><td>NISA成長投資枠</td><td>5801.T 古河電工</td><td class="num">240,000円</td><td class="num">55株</td></tr><tr class="buy"><td>NISA成長投資枠</td><td>6981.T 村田製作所</td><td class="num">240,000円</td><td class="num">20株</td></tr><tr class="buy"><td>NISA成長投資枠</td><td>9984.T ソフトバンクG</td><td class="num">240,000円</td><td class="num">40株</td></tr><tr class="buy"><td>NISA成長投資枠</td><td>5802.T 住友電工</td><td class="num">240,000円</td><td class="num">85株</td></tr><tr class="buy"><td>NISA成長投資枠</td><td>6857.T アドバンテスト</td><td class="num">240,000円</td><td class="num">8株</td></tr><tr class="buy"><td>NISA成長投資枠</td><td>6920.T レーザーテック</td><td class="num">240,000円</td><td class="num">5株</td></tr><tr class="buy"><td>NISA成長投資枠</td><td>6762.T TDK</td><td class="num">240,000円</td><td class="num">65株</td></tr><tr class="buy"><td>NISA成長投資枠</td><td>6503.T 三菱電機</td><td class="num">240,000円</td><td class="num">40株</td></tr>
+<tr class="buy"><td>課税口座</td><td>5801.T 古河電工</td><td class="num">240,000円</td><td class="num">55株</td></tr><tr class="buy"><td>課税口座</td><td>6981.T 村田製作所</td><td class="num">240,000円</td><td class="num">20株</td></tr>
+<tr><td colspan="2"><b>合計(NISA枠消費 1,920,000円 / 残枠 480,000円)</b></td><td class="num"><b>2,400,000円</b></td><td></td></tr>
+</table>
+<div class="ok"><b>執行ルール</b><br>
+・最新の rebalance_order.html 生成日から<b>3営業日以内</b>に執行。過ぎたら次回四半期へ持ち越し<br>
+・注文: 寄付成行、または前日終値±1%指値(当日限り、未約定なら翌営業日成行)<br>
+・個別株は単元未満株サービス(SBI「S株」等)で1株単位。株数は発注時に「round(金額÷実勢価格)」で再計算。NISA残枠超過時はfloor<br>
+・約定単価・株数を data/portfolio_state.json と decisions.csv に必ず記録(リロードの±判定と月次集計の基準)</div>
+<h3>3-2. 定例スケジュール</h3>
+<table><tr><th>頻度</th><th>タイミング</th><th>作業</th></tr>
+<tr><td>日次</td><td>引け後</td><td>reload_monitor.html でリロード枠の±トリガー確認。トリガー時は翌営業日に売却→次候補買付</td></tr>
+<tr><td>月次</td><td>月初</td><td>monthly_report.html で3指数比較・事業毀損チェック・実現損益を確認</td></tr>
+<tr><td>四半期</td><td>1/4/7/10月の第1営業日</td><td>価格更新→rebalance_order.html 再生成→指示に従い入替(バッファ16適用で入替は少数)</td></tr>
+<tr><td>年次</td><td>1月</td><td>新規NISA枠の投入。母集団を同一基準で再抽出し universe_notes.md に記録</td></tr>
+</table>
+
+<h2>4. 変更ルール(凍結規律)</h2>
+<div class="warn">
+<b>全パラメータは凍結中(frozen 2026-07-06)。</b>変更には次の3点セットが必須:<br>
+①ユーザーの明示指示 ②OOSを含むバックテスト再検証 ③config/change_log.csv への記録<br>
+解除条件: 新規データ12か月以上の蓄積後、ユーザーの明示指示がある場合のみ。変更時はOOS再検証+change_log記録+ユーザー承認の3点セット必須
+</div>
+<table><tr><th>ルール</th><th>内容</th></tr>
+<tr><td>撤退基準(継続監視)</td><td>自ポートフォリオが2四半期連続で3指数すべてに劣後した場合、年次を待たず構成を再検証</td></tr>
+<tr><td>DD制限</td><td>最大ドローダウンがTOPIXの1.5倍を超える構成は採用しない(バッファ24案・5銘柄案の不採用根拠)</td></tr>
+<tr><td>検証済み不採用</td><td>逆ボラ加重 / TOPIX200日線レジームフィルタ / 3・6・12か月モメンタム合成 / バッファ24 / 5銘柄集中 — いずれも検証で劣後・またはDD超過(再提案しない)</td></tr>
+<tr><td>裁量の記録</td><td>ルール通り=rule、裁量変更=override を decisions.csv に理由付きで記録</td></tr>
+</table>
+
+<h2>5. 運用シミュレーション(バックテスト要約)</h2>
+<p>全検証はNISA枠制約(年間枠1月リセット・買付で消費・売却で不返還・枠不足時見送り)と売買コスト0.1%を含む。四半期開始の1年間ローリング窓で3指数(TOPIX配当込み・日経平均・S&P500円建て)+1%への勝率を測定。</p>
+<h3>5-1. 現行H1案 vs 改良前(2017-10〜2026-07-02、32窓)</h3>
+<table><tr><th>design</th><th>all3_win</th><th>avg_ex_topix</th><th>avg_ex_spjpy</th><th>worst_dd</th><th>full_pct</th><th>full_cagr</th><th>full_max_dd</th></tr><tr><td class="num">buf8_c10_n8</td><td class="num">65.6</td><td class="num">23.98</td><td class="num">18.01</td><td class="num">-36.9</td><td class="num">730.3</td><td class="num">27.37</td><td class="num">-38.4</td></tr><tr><td class="num">buf12_c10_n8</td><td class="num">68.8</td><td class="num">24.89</td><td class="num">18.93</td><td class="num">-36.9</td><td class="num">791.8</td><td class="num">28.41</td><td class="num">-38.1</td></tr><tr><td class="num">buf16_c10_n8</td><td class="num">68.8</td><td class="num">28.41</td><td class="num">22.44</td><td class="num">-37.4</td><td class="num">890.1</td><td class="num">29.95</td><td class="num">-36.6</td></tr><tr><td class="num">buf20_c10_n8</td><td class="num">68.8</td><td class="num">28.07</td><td class="num">22.10</td><td class="num">-36.3</td><td class="num">860.4</td><td class="num">29.50</td><td class="num">-38.1</td></tr><tr><td class="num">buf24_c10_n8</td><td class="num">71.9</td><td class="num">29.42</td><td class="num">23.46</td><td class="num">-39.1</td><td class="num">1348.5</td><td class="num">35.73</td><td class="num">-44.0</td></tr></table>
+<p class="small">buf16_c10_n8 が現行採用(バッファ16・コスト0.1%・8銘柄)。全期間+890%はCAGR約30%に相当。</p>
+<h3>5-2. 別時代での再現性(2010-04〜2017-10、26窓)</h3>
+<table><tr><th>design</th><th>windows</th><th>all3_win</th><th>avg_ex_topix</th><th>avg_ex_nikkei</th><th>avg_ex_spjpy</th><th>worst_ex_any</th><th>worst_dd</th><th>full_pct</th><th>full_cagr</th><th>full_beat_all3</th><th>full_max_dd</th><th>full_quota_blocked</th></tr><tr><td class="num">H0_pre2017</td><td class="num">26</td><td class="num">38.5</td><td class="num">21.52</td><td class="num">5.48</td><td class="num">0.67</td><td class="num">-26.6</td><td class="num">-36.2</td><td class="num">149.8</td><td class="num">12.98</td><td class="num">NO</td><td class="num">-31.9</td><td class="num">62</td></tr><tr><td class="num">H1_buffer16_pre2017</td><td class="num">26</td><td class="num">38.5</td><td class="num">26.10</td><td class="num">10.06</td><td class="num">5.25</td><td class="num">-21.0</td><td class="num">-36.0</td><td class="num">262.8</td><td class="num">18.74</td><td class="num">YES</td><td class="num">-31.9</td><td class="num">53</td></tr></table>
+<p class="small">東日本大震災・2015-16年下落を含む期間でもバッファ16の優位は再現。ただし3指数同時勝率は38.5%で、<b>「毎年勝つ」ことは期待できない</b>(長期累積で勝ち越す設計)。</p>
+<h3>5-3. 感度分析(パラメータ頑健性)</h3>
+<table><tr><th>design</th><th>all3_win</th><th>full_pct</th><th>full_max_dd</th><th>full_quota_blocked</th></tr><tr><td class="num">buf8_c10_n8</td><td class="num">65.6</td><td class="num">730.3</td><td class="num">-38.4</td><td class="num">95</td></tr><tr><td class="num">buf12_c10_n8</td><td class="num">68.8</td><td class="num">791.8</td><td class="num">-38.1</td><td class="num">80</td></tr><tr><td class="num">buf16_c10_n8</td><td class="num">68.8</td><td class="num">890.1</td><td class="num">-36.6</td><td class="num">62</td></tr><tr><td class="num">buf20_c10_n8</td><td class="num">68.8</td><td class="num">860.4</td><td class="num">-38.1</td><td class="num">43</td></tr><tr><td class="num">buf24_c10_n8</td><td class="num">71.9</td><td class="num">1348.5</td><td class="num">-44.0</td><td class="num">15</td></tr><tr><td class="num">buf8_c30_n8</td><td class="num">59.4</td><td class="num">571.1</td><td class="num">-38.6</td><td class="num">95</td></tr><tr><td class="num">buf12_c30_n8</td><td class="num">65.6</td><td class="num">639.2</td><td class="num">-38.3</td><td class="num">80</td></tr><tr><td class="num">buf16_c30_n8</td><td class="num">68.8</td><td class="num">735.5</td><td class="num">-36.8</td><td class="num">62</td></tr><tr><td class="num">buf20_c30_n8</td><td class="num">68.8</td><td class="num">689.8</td><td class="num">-38.8</td><td class="num">42</td></tr><tr><td class="num">buf24_c30_n8</td><td class="num">71.9</td><td class="num">1245.5</td><td class="num">-44.4</td><td class="num">15</td></tr><tr><td class="num">buf10_c10_n5</td><td class="num">75.0</td><td class="num">851.8</td><td class="num">-41.2</td><td class="num">54</td></tr><tr><td class="num">buf20_c10_n10</td><td class="num">68.8</td><td class="num">1004.9</td><td class="num">-36.7</td><td class="num">37</td></tr></table>
+<p class="small">バッファ12〜20で成績は高原状態(=1点への過剰適合ではない)。コスト3倍でも順位不変。バッファ24と5銘柄はDD制限超過で不採用。</p>
+
+<h2>6. 検証の限界(必読)</h2>
+<ol>
+<li><b>生存バイアス</b>: 母集団は2026年時点で生き残った53銘柄。過去に上場廃止・脱落した銘柄を含まないため、過去成績は実力より高く見えている</li>
+<li><b>2008年型暴落は未検証</b>: TOPIX ETF(1306.T)の取得可能データが2009年以降のため、リーマン級のモメンタムクラッシュ耐性は確認できていない</li>
+<li><b>統計的検出力</b>: 独立な年次サンプルは10個未満。勝率の数字には大きな不確実性がある</li>
+<li><b>結論</b>: 実運用の期待値はバックテストの数字より下と見るべき。撤退基準(2四半期連続劣後)の遵守が最後の防衛線</li>
+</ol>
+
+<p class="small">生成: 2026-07-06 06:27 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+</body></html>
