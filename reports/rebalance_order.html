@@ -12,12 +12,21 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 .check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
 </style></head><body>
 <h1>リバランス指示書 (基準日: 2026-07-06)</h1>
+
+
+<div class="warn"><b>初回発注前チェックリスト(1つでも未了なら発注しない)</b><br>
+□ 証券口座の配当受取方式が<b>「株式数比例配分方式」</b>になっている(未設定だとNISA配当にも20.315%課税される)<br>
+□ 課税口座は<b>特定口座(源泉徴収あり)</b>になっている(リロード枠の確定申告を不要にするため)<br>
+□ 単元未満株サービス(SBI「S株」等)が利用可能になっている<br>
+□ シナリオ・リハーサル資料の事前コミットメント5項目を読み、<code>decisions.csv</code> に action=commitment を記録した</div>
 <p>資金モデル: 1口座 × 2,400,000円 = 2,400,000円。構成: コア0% / サテライト80% / リロード枠20%(課税口座)。</p>
 <div class="ok"><b>執行ルール(この指示書だけで発注完結すること)</b><br>
+・<b>鮮度</b>: 発注当日の朝に fetch_prices.mjs → build_rebalance_order.mjs を実行して本書を再生成してから発注する(古い指示書は使わない)<br>
 ・<b>いつ</b>: 本指示書の生成日から<b>3営業日以内</b>。過ぎたら執行せず次回四半期まで持ち越す(運用方針書§8-2)<br>
-・<b>注文条件</b>: 寄付成行、または前日終値±1%の指値(当日限り。未約定なら翌営業日に成行へ切替)<br>
-・<b>発注経路</b>: NISA口座=成長投資枠。個別株は単元未満株サービス(SBI「S株」等)で1株単位。予算内で単元(100株)が買える場合のみ単元で<br>
-・<b>株数</b>: 下表の株数は基準日終値による目安。発注時は 株数 = round(金額 ÷ 実勢価格) で再計算。丸めてNISA残枠を超える場合はfloor(切り捨て)に変更</div>
+・<b>注文条件</b>: 単元未満株(S株)は<b>当日朝の成行注文→前場始値で約定</b>(S株に指値は存在しない。SBIは7:00頃までの注文で前場寄付扱い)。単元株(100株)で買える場合のみ、寄付成行または前日終値±1%指値を使用可<br>
+・<b>発注経路</b>: NISA口座=成長投資枠。個別株は1株単位。予算内で単元が買える場合のみ単元で<br>
+・<b>株数</b>: ①株数 = round(金額 ÷ 実勢価格) ②その銘柄でNISA残枠を超えるならfloor ③合計が残枠超ならモメンタム順位の低い銘柄からfloor→見送り<br>
+・<b>記録</b>: 約定ごとに <code>node src/record_trade.mjs sat-buy 銘柄 約定単価 株数</code>(リロードは reload-buy)。JSONの手編集は禁止</div>
 
 <h2>1. NISA枠の状態</h2>
 <table><tr><th>年間枠(合計)</th><th>使用済み</th><th>残枠</th><th>今回指示の消費</th><th>指示実行後の残枠</th></tr>
@@ -48,8 +57,11 @@ th{background:#e8f3fa;text-align:left}td.num{text-align:right}
 
 <h2>6. 約定後にやること</h2>
 <ol>
-<li><code>data/portfolio_state.json</code> を実際の約定内容(銘柄・金額・取得単価・枠使用額)で更新する。</li>
-<li><code>decisions.csv</code> に1行ずつ記録する(ルール通りなら rule、裁量変更なら override と理由)。</li>
+<li>約定ごとに record_trade.mjs で記録する(portfolio_state.json と decisions.csv が同時更新される):<br>
+<code>node src/record_trade.mjs sat-buy 5801.T 4405 54</code>(サテライト買付の例)<br>
+<code>node src/record_trade.mjs reload-buy 5801.T 4405 54</code>(リロード買付の例)</li>
+<li>裁量変更をした場合は末尾に <code>-- override "理由"</code> を付ける。</li>
+<li>全件記録後 <code>node src/record_trade.mjs status</code> で残枠・保有・利確損切ラインを確認する。</li>
 </ol>
-<p class="small">生成: 2026-07-06 08:37 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+<p class="small">生成: 2026-07-06 09:01 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
 </body></html>
