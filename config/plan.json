@@ -1,0 +1,85 @@
+{
+  "capital_yen": 2400000,
+  "january_new_funds": "none_by_default",
+  "january_new_funds_note": "2026-07-06定義: 翌年1月の新規年間枠はデフォルトで追加入金なし(枠は入替にのみ使用)。追加入金する年はユーザーが金額を指定し、サテライト80%/リロード20%の同比率で増額して指示書を再生成する",
+  "core": {
+    "ratio": 0,
+    "mode": "none",
+    "retired_note": "G案: 2026-07-06 ユーザー指示でコアETFを廃止し、サテライト80%へ統合。OOS再検証は backtest_summary_design_g.csv(G3: OOS全3指数勝率100%・全期間+1011.6%・最大DD-35.7%)。legs定義はロールバック用に保持",
+    "legs": {
+      "japan": { "backtest_proxy": "1306.T", "live_instrument": "1306.T", "note": "TOPIX連動ETF" },
+      "nikkei": { "backtest_proxy": "^N225", "live_instrument": "1321.T", "note": "日経225連動ETF。バックテストは^N225(配当なし価格指数)を代理とするため日経レッグはやや保守的に評価される" },
+      "us": { "backtest_proxy": "^GSPC x JPY=X", "live_instrument": "2558.T等の東証上場S&P500 ETF(円建て)", "note": "実運用は東証上場ETFで代替" }
+    },
+    "decision": "12-1か月相対モメンタムが最も高い市場ETFを保有(TOPIX/日経平均/S&P500円建ての3択)。判定は年1回、年初の新規NISA枠投入時のみ。年中の切替はしない(枠消費回避)",
+    "note": "D案: ユーザー承認 2026-07-03。2026-07-06 ユーザー指示でベンチマーク3指数と整合させるため日経レッグを追加(F案)。OOS再検証は backtest_summary_design_f.csv"
+  },
+  "satellite": {
+    "ratio": 0.80,
+    "holdings_min": 5,
+    "holdings_max": 8,
+    "max_per_sector": 2,
+    "rank_buffer": 16,
+    "rank_buffer_note": "H1案: 2026-07-06採用。保有銘柄はモメンタム順位16位(holdings_maxの2倍)以内なら売却せず保持。NISA枠は売却しても戻らないため回転抑制の価値が大きい。NISA枠制約をモデル化したOOS再検証(backtest_summary_design_h.csv)で、バッファなし比:3指数勝率65.6%→68.8%・全期間+730%→+890%・枠切れ買付見送り95回→62回。逆ボラ加重(H2)・200日線レジーム(H3)・複数期間モメンタム合成(H4)は検証の結果すべて悪化のため不採用。頑健性(2026-07-06追試): バッファ12〜20は成績が高原状態で16は安定域。24は全期間+1348%だが最大DD-44%でdd_limit_vs_topix_ratio 1.5を超過するため不採用。コスト3倍(0.3%)でも順位関係は不変。2010-2016年の疑似OOS(backtest_summary_h_pre2017.csv)でもバッファ16>なし(全期間+262.8% vs +149.8%・3指数勝ちYES vs NO)で再現",
+    "sector_cap_note": "2026-07-06 ユーザー指示。モメンタム上位が単一テーマ(電線・半導体等)に固まる集中リスクへの対処。モメンタム順に走査し同一セクター3銘柄目以降をスキップ。セクターは universe.csv の sector 列(199_universe100_screening.csv 由来。電線系・半導体系は同一グループへ正規化)",
+    "rebalance": "quarterly",
+    "max_trades_per_name_per_year": 2
+  },
+  "reload": {
+    "ratio": 0.20,
+    "positions": 2,
+    "pool": "母集団のうち年率ボラ上位30%かつ12-1か月モメンタム正の銘柄をモメンタム順",
+    "take_profit_pct": 20,
+    "stop_loss_pct": -8,
+    "on_trigger": "全量売却し、候補リスト最上位の未保有銘柄へ即時リロード",
+    "account": "課税口座",
+    "account_reason": "検証で年約21回・当初資金比400〜950%/年の買付が発生し、NISA年間枠(240万)内で運用不能なため。NISA枠はコア60%+サテライト20%に充当する",
+    "note": "E2案: ユーザー承認 2026-07-03(D案+リロード枠でS&P500円建て打倒を目標)"
+  },
+  "universe": {
+    "market": "TSE_PRIME",
+    "min_market_cap_yen": 200000000000,
+    "min_avg_daily_value_yen": 1000000000,
+    "refresh_rule": "毎年1月の年次判定時に同一基準(時価総額2000億円・売買代金10億円)で母集団を再抽出する。現行53銘柄は2026年時点の抽出で生存バイアスを含むため、追加・除外を universe_notes.md に記録し、除外銘柄の保有分は次回四半期リバランスで自然に入替える(即時売却はしない)"
+  },
+  "selection": {
+    "momentum": { "lookback_months": 12, "skip_months": 1 },
+    "quality": { "roe_min_pct": 8, "margin_trend_years": 3 },
+    "exclude_valuation_top_decile": true,
+    "exclude_volatility_top_decile": false,
+    "volatility_filter_note": "2026-07-03ユーザー承認で撤廃。35四半期の対ユニバース検証(selection_rule_evaluation.csv)でボラ除外は超過収益を-0.08pt/四半期に破壊し(除外なし+2.16pt)、ワースト四半期も除外なしの方が浅かったため"
+  },
+  "sell_rules": {
+    "mechanical_stop_loss": false,
+    "business_damage_triggers": ["下方修正", "赤字転落", "重大不祥事", "主力需要崩壊", "信用不安"]
+  },
+  "benchmark": {
+    "goal": "TOPIX配当込み・日経平均・S&P500円建ての3指数すべてに+1%(ユーザーが2026-07-03にTOPIX単独主軸案を非承認)",
+    "targets": [
+      { "name": "TOPIX配当込み", "proxy": "1306.T adjclose(異常2日除外)" },
+      { "name": "日経平均", "proxy": "^N225" },
+      { "name": "S&P500円建て", "proxy": "^GSPC x JPY=X" }
+    ],
+    "excess_target_pct": 1,
+    "window_months": 12,
+    "rolling": true,
+    "dd_limit_vs_topix_ratio": 1.5
+  },
+  "backtest": {
+    "start": "2016-01-01",
+    "walkforward": "quarterly",
+    "oos_reserve_years": 2,
+    "quota_modeling": "H案以降は必須: 年間NISA枠=当初資金相当を1月にリセット、買付で消費・売却で戻らない・枠不足時は買付見送り、をシミュレーションに含める(run_backtest_design_h.mjs 準拠)。枠制約を無視した旧検証(D〜G)は成績を過大評価していた"
+  },
+  "go_no_go": {
+    "note": "3指数同時目標用にD案採用時(2026-07-03)に再定義。数値確認後の設定であることをPhase 3報告に明記する",
+    "go": { "oos_all3_win_rate_min_pct": 50, "fullperiod_cumulative_beat_all3": true, "dd_vs_topix_ratio_max": 1.5 },
+    "conditional": { "oos_all3_win_rate_min_pct": 40, "action": "コア=C案(四半期切替・課税口座併用)の再検討をユーザーに提示" },
+    "no_go": { "action": "全額インデックス(D案コアのみ)を推奨し、Phase 4以降を中止する" }
+  },
+  "frozen": {
+    "date": "2026-07-06",
+    "scope": "core/satellite/reload/selection/benchmark の全パラメータ",
+    "unfreeze_condition": "新規データ12か月以上の蓄積後、ユーザーの明示指示がある場合のみ。変更時はOOS再検証+change_log記録+ユーザー承認の3点セット必須"
+  }
+}

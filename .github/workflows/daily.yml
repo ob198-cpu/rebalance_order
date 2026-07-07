@@ -1,0 +1,88 @@
+name: Daily market update and deploy
+
+on:
+  schedule:
+    # 16:35 JST (07:35 UTC) 月〜金。東証大引け(15:00 JST)後に実行。
+    # Actionsのcronは数分〜数十分遅延することがある(仕様)。
+    - cron: "35 7 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  issues: write
+
+# pages.yml と同じグループにして、デプロイの同時実行を防ぐ
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Yahoo Finance から全銘柄の価格を取得(失敗銘柄は reports/data_fetch_errors.csv に記録され、
+      # 前回コミット時点のCSVで各帳票の生成が継続される)
+      - name: Fetch latest prices
+        run: node src/fetch_prices.mjs
+
+      - name: Rebuild reports
+        run: |
+          node src/build_rebalance_order.mjs
+          node src/reload_monitor.mjs
+          node src/build_monthly_report.mjs
+          node src/build_selection_audit.mjs
+
+      # リロード枠の利確/損切りトリガー・株式分割疑い・データ鮮度異常があれば
+      # Issueを作成する(リポジトリをWatchしていればGitHubからメール通知が届く)
+      - name: Notify via GitHub Issue when action is needed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          asof=$(node -e "console.log(require('./reports/reload_status.json').as_of)")
+          node -e "
+            const s = require('./reports/reload_status.json');
+            const lines = [];
+            if (s.triggers.length) lines.push('■ リロード枠トリガー(翌営業日寄付で執行):', ...s.triggers.map(t => '- ' + t));
+            if (s.split_suspects.length) lines.push('■ 株式分割の疑い(取得単価の調整要否を確認):', ...s.split_suspects.map(t => '- ' + t));
+            if (s.data_stale) lines.push('■ データ鮮度警告: 価格データが4日以上古い状態です');
+            require('fs').writeFileSync('issue_body.md', lines.length ? lines.join('\n') + '\n\n詳細: https://ob198-cpu.github.io/rebalance_order/reports/reload_monitor.html\n(このIssueは日次自動チェックが作成)' : '');
+          "
+          if [ -s issue_body.md ]; then
+            title="【要対応】日次モニタ検知 ${asof}"
+            if [ -z "$(gh issue list --state open --search "$title in:title" --json number --jq '.[].number')" ]; then
+              gh issue create --title "$title" --body-file issue_body.md
+              echo "notification issue created: $title"
+            else
+              echo "issue already exists for $asof, skipped"
+            fi
+          else
+            echo "no triggers, no notification"
+          fi
+          rm -f issue_body.md
+
+      # 再生成した帳票と最新データを、コミットせずにそのままPagesへデプロイする
+      # (毎日のコミットによるリポジトリ肥大を避ける。gitの内容は手動push時点のスナップショット)
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

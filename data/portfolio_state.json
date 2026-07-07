@@ -1,0 +1,16 @@
+{
+  "as_of": "2026-07-03",
+  "invested": false,
+  "accounts": 1,
+  "capital_yen_per_account": 2400000,
+  "nisa": {
+    "year": 2026,
+    "quota_total_yen": 2400000,
+    "quota_used_yen": 0
+  },
+  "core": { "leg": null, "instrument": null, "amount_yen": 0, "entry_note": "" },
+  "satellite": [],
+  "reload": [],
+  "cash_yen": 2400000,
+  "note": "未投入の初期状態。約定のたびにこのファイルを実際の内容で更新する。satellite要素: {symbol,name,amount_yen}。reload要素: {symbol,name,entry_price,shares,entry_date,account:'taxable'}"
+}

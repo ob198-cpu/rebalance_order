@@ -1,0 +1,13 @@
+{
+  "price_history_years": 10,
+  "split_daily_jump_abs_pct": 30,
+  "missing_rate_warn_pct": 5,
+  "liquidity_avg_trading_days": 60,
+  "network_delay_ms": 100,
+  "benchmarks": [
+    { "symbol": "1306.T", "name": "TOPIX連動ETF 1306" },
+    { "symbol": "^N225", "name": "日経平均" },
+    { "symbol": "^GSPC", "name": "S&P 500" },
+    { "symbol": "JPY=X", "name": "USD/JPY" }
+  ]
+}
